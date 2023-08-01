@@ -7,7 +7,7 @@ https://napari.org/stable/plugins/guides.html?#readers
 """
 import numpy as np
 import h5py
-import xarray
+#import xarray
 
 def get_reader(path):
     """A basic implementation of a Reader contribution.
