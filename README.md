@@ -1,13 +1,17 @@
 # napari-h5
 
-[![License Apache Software License 2.0](https://img.shields.io/pypi/l/napari-h5.svg?color=green)](https://github.com/perdigao1/napari-h5/raw/main/LICENSE)
+[![License Apache Software License 2.0](https://img.shields.io/pypi/l/napari-h5.svg?color=green)](https://github.com/rosalindfranklininstitute/napari-h5/raw/main/LICENSE)
 [![PyPI](https://img.shields.io/pypi/v/napari-h5.svg?color=green)](https://pypi.org/project/napari-h5)
 [![Python Version](https://img.shields.io/pypi/pyversions/napari-h5.svg?color=green)](https://python.org)
-[![tests](https://github.com/perdigao1/napari-h5/workflows/tests/badge.svg)](https://github.com/perdigao1/napari-h5/actions)
-[![codecov](https://codecov.io/gh/perdigao1/napari-h5/branch/main/graph/badge.svg)](https://codecov.io/gh/perdigao1/napari-h5)
+[![tests](https://github.com/rosalindfranklininstitute/napari-h5/workflows/tests/badge.svg)](https://github.com/rosalindfranklininstitute/napari-h5/actions)
 [![napari hub](https://img.shields.io/endpoint?url=https://api.napari-hub.org/shields/napari-h5)](https://napari-hub.org/plugins/napari-h5)
 
-A file reader plugin for napar
+A file reader plugin for napari
+
+
+It opens simple *.h5 files with data inside internal `/data`.
+
+For more complicated h5 data structures please try other plugins.
 
 ----------------------------------
 
