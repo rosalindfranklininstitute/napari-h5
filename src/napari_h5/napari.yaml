@@ -1,0 +1,24 @@
+name: napari-h5
+display_name: h5 files
+contributions:
+  commands:
+    - id: napari-h5.get_reader
+      python_name: napari_h5._reader:get_reader
+      title: Open data with open h5 files
+    - id: napari-h5.multi_layer_writer
+      python_name: napari_h5._writer:multi_layer_writer
+      title: Save multi-layer data with open h5 files
+    - id: napari-h5.single_layer_writer
+      python_name: napari_h5._writer:single_layer_writer
+      title: Save image data with open h5 files
+  readers:
+    - command: napari-h5.get_reader
+      accepts_directories: false
+      filename_patterns: ['*.h5']
+  writers:
+    - command: napari-h5.multi_layer_writer
+      layer_types: ['image*','labels*']
+      filename_extensions: []
+    - command: napari-h5.single_layer_writer
+      layer_types: ['image']
+      filename_extensions: ['.h5']
