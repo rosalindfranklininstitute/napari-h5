@@ -67,7 +67,7 @@ def reader_function(path):
     # # stack arrays into single array
     # data = np.squeeze(np.stack(arrays))
     
-    print("reader_function()") #Debug
+    #print("reader_function()") #Debug
     import pathlib
     import h5py
 
@@ -88,8 +88,7 @@ def reader_function(path):
                 for k0,i0 in list(f.items()):
                     if isinstance(i0, h5py._hl.dataset.Dataset):
                         #Grab data from this dataset
-                        
-                        print(f"Dataset name:{k0} found") #Debug
+                        #print(f"Dataset name:{k0} found") #Debug
 
                         f_path = pathlib.Path(str(p0))
                         fname_stem = f_path.stem
