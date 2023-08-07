@@ -9,9 +9,11 @@
 A file reader plugin for napari
 
 
-It opens simple *.h5 files with data inside internal `/data`.
+It opens simple *.h5 files. Reads all Datasets inside the file and converts to
+a napari Image object (np.array).
 
-For more complicated h5 data structures please try other plugins.
+ It does not support data organised internally in "groups".
+ For these more complicated h5 data structures please try other plugins.
 
 ----------------------------------
 
