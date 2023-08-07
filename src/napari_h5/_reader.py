@@ -6,7 +6,6 @@ implement multiple readers or even other plugin contributions. see:
 https://napari.org/stable/plugins/guides.html?#readers
 """
 import numpy as np
-import h5py
 #import xarray
 
 def get_reader(path):
@@ -67,18 +66,42 @@ def reader_function(path):
     # arrays = [np.load(_path) for _path in paths]
     # # stack arrays into single array
     # data = np.squeeze(np.stack(arrays))
+    
+    print("reader_function()") #Debug
+    import pathlib
+    import h5py
 
-    add_kwargs = {}
-    layer_type = "image"
-    data_list = []
+    data_list = None
     for p0 in paths:
         with h5py.File(str(p0),'r') as f:
-            #TODO: Check if 'data' is present and load it by default.
+            data_list = []
             # If not ask user to help choosing data to display
 
-            data0 = np.array(f['data']) #Loads 'data' by default
-            data_list.append( (data0, add_kwargs, layer_type) )
+            #data0 = np.array(f['data']) #Loads 'data' by default
 
+            #Get keys available
+            fkeys = list(f.keys())
+
+            if len(fkeys)>=1:
+                #Check which ones are "Datasets"
+                
+                for k0,i0 in list(f.items()):
+                    if isinstance(i0, h5py._hl.dataset.Dataset):
+                        #Grab data from this dataset
+                        
+                        print(f"Dataset name:{k0} found") #Debug
+
+                        f_path = pathlib.Path(str(p0))
+                        fname_stem = f_path.stem
+                        add_kwargs = {'name':fname_stem+" "+k0}
+                        layer_type = "image"
+
+                        data0 = np.array(i0) #Loads 'data' by default
+                        data_list.append( (data0, add_kwargs, layer_type) )
+
+                if len(data_list)==0:
+                    data_list=None
+                
     # optional kwargs for the corresponding viewer.add_* method
     
 
