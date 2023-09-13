@@ -1,5 +1,5 @@
 name: napari-h5
-display_name: h5 files
+display_name: napari-h5
 contributions:
   commands:
     - id: napari-h5.get_reader
