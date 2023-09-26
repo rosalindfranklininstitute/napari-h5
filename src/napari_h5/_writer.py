@@ -33,7 +33,7 @@ def multi_layer_writer(path: str, layer_data: List[FullLayerData]) -> List[str]:
 
     from pathlib import Path
     path0 = Path(str)
-    for i, d0 in enumerate(data):
+    for i, d0 in enumerate(layer_data):
         path1 = f"{path0.stem()}_{i:03d}{path0.suffix()}"
         
         try:

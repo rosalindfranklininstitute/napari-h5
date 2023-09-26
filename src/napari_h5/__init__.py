@@ -4,7 +4,7 @@ from ._reader import get_reader
 from ._writer import multi_layer_writer, single_layer_writer
 
 __all__ = (
-    "napari_get_reader",
-    "write_single_image",
-    "write_multiple",
+    "get_reader",
+    "single_layer_writer",
+    "multi_layer_writer",
     )
