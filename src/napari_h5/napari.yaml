@@ -18,7 +18,7 @@ contributions:
   writers:
     - command: napari-h5.multi_layer_writer
       layer_types: ['image*','labels*']
-      filename_extensions: []
+      filename_extensions: ['.h5']
     - command: napari-h5.single_layer_writer
-      layer_types: ['image']
+      layer_types: ['image','labels']
       filename_extensions: ['.h5']

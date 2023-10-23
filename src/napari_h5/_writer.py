@@ -11,6 +11,7 @@ from __future__ import annotations
 from typing import TYPE_CHECKING, Any, List, Sequence, Tuple, Union
 
 import h5py
+import numpy as np
 
 if TYPE_CHECKING:
     DataType = Union[Any, Sequence[Any]]
@@ -32,15 +33,29 @@ def multi_layer_writer(path: str, layer_data: List[FullLayerData]) -> List[str]:
     paths=[]
 
     from pathlib import Path
-    path0 = Path(str)
-    for i, d0 in enumerate(layer_data):
-        path1 = f"{path0.stem()}_{i:03d}{path0.suffix()}"
-        
-        try:
-            with h5py.File(path,'w') as f:
-                f.create_dataset('data', data=d0)
-            paths.append(path1)
-        except:
-            pass
+    path0 = Path(path)
+    #print("path0:"+str(path0))
+
+    for i, ld0 in enumerate(layer_data):
+        #layer data is a list of FullLayerData
+        # FullLayerData = Tuple[DataType, LayerAttributes, LayerName]
+        # https://napari.org/stable/plugins/guides.html#multi-layer-writer
+        # DataType is usually a ndarray, depending of the layer type
+
+        datatype0, layerattibs0, layername0 = ld0
+
+        if layername0=='image' or layername0=='labels':
+            if isinstance(datatype0,np.ndarray):
+                path1 = Path.joinpath(path0.parent, path0.stem + f"_{i:03d}"+ path0.suffix)
+                
+                #print(f"data i:{i} , path1:{path1}")
+
+                try:
+                    with h5py.File(path1,'w') as f:
+                        f.create_dataset('data', data=datatype0.data)
+                    paths.append(str(path1))
+                except:
+                    #if it fails to save... bad luck
+                    pass
     # return path to any file(s) that were successfully written
     return paths
