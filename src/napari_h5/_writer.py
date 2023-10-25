@@ -17,9 +17,13 @@ if TYPE_CHECKING:
     DataType = Union[Any, Sequence[Any]]
     FullLayerData = Tuple[DataType, dict, str]
 
-#https://napari.org/dev/plugins/guides.html?highlight=napari_get_writer
+
+#https://napari.org/stable/plugins/guides.html#single-layer-writer
 def single_layer_writer(path: str, data: Any, attributes: dict) -> List[str]:
     """Writes a single image layer"""
+
+    if not isinstance(data, np.ndarray):
+        raise ValueError("data is not ndarray. Not saving.")
 
     with h5py.File(path,'w') as f:
         f.create_dataset('data', data=data)
