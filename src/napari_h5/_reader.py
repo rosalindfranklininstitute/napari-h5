@@ -71,13 +71,12 @@ def reader_function(path):
     import pathlib
     import h5py
 
-    data_list = None
+    data_list = []
     for p0 in paths:
-        with h5py.File(str(p0),'r') as f:
-            data_list = []
-            # If not ask user to help choosing data to display
 
-            #data0 = np.array(f['data']) #Loads 'data' by default
+        try:
+            f=h5py.File(str(p0),'r')
+                # If not ask user to help choosing data to display
 
             #Get keys available
             fkeys = list(f.keys())
@@ -94,18 +93,30 @@ def reader_function(path):
                         fname_stem = f_path.stem
                         add_kwargs = {'name':fname_stem+" "+k0}
                         layer_type = "image"
+                        
+                        data0=None
 
-                        data0 = np.array(i0) #Loads 'data' by default
-                        data_list.append( (data0, add_kwargs, layer_type) )
+                        if i0.nbytes<=1e9:
+                            data0 = np.array(i0)
+                            # Check for singleton dimensions
+                            if data0.ndim>2:
+                                data0=np.squeeze(data0)
+                        else:
+                            #Opens as dask
+                            print("Data is >1e bytes. Opening to dask object.")
+                            import dask.array as da
+                            data0 = da.from_array(i0)
+                            if data0.ndim>2:
+                                data0=da.squeeze(data0)
 
-                if len(data_list)==0:
-                    data_list=None
-                
-    # optional kwargs for the corresponding viewer.add_* method
-    
+                        if not data0 is None:
+                            data_list.append( (data0, add_kwargs, layer_type) )
 
-    #layer_type = "image"  # optional, default is "image"
-    #return [(data, add_kwargs, layer_type)]
+        except Exception as e:
+            print(f"Failed to open {str(p0)}")
+                 
+    if len(data_list)==0:
+        data_list=None
 
     return data_list
 

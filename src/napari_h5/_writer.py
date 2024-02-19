@@ -12,6 +12,7 @@ from typing import TYPE_CHECKING, Any, List, Sequence, Tuple, Union
 
 import h5py
 import numpy as np
+import dask.array as da
 
 if TYPE_CHECKING:
     DataType = Union[Any, Sequence[Any]]
@@ -22,8 +23,8 @@ if TYPE_CHECKING:
 def single_layer_writer(path: str, data: Any, attributes: dict) -> List[str]:
     """Writes a single image layer"""
 
-    if not isinstance(data, np.ndarray):
-        raise ValueError("data is not ndarray. Not saving.")
+    if not isinstance(data, np.ndarray) or isinstance(data,da.Array):
+        raise ValueError("data is not ndarray nor dask.Array. Not saving.")
 
     with h5py.File(path,'w') as f:
         f.create_dataset('data', data=data)
@@ -49,7 +50,7 @@ def multi_layer_writer(path: str, layer_data: List[FullLayerData]) -> List[str]:
         datatype0, layerattibs0, layername0 = ld0
 
         if layername0=='image' or layername0=='labels':
-            if isinstance(datatype0,np.ndarray):
+            if isinstance(datatype0,np.ndarray) or isinstance(datatype0,da.Array):
                 path1 = Path.joinpath(path0.parent, path0.stem + f"_{i:03d}"+ path0.suffix)
                 
                 #print(f"data i:{i} , path1:{path1}")

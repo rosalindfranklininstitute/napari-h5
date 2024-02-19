@@ -1,4 +1,4 @@
-__version__ = "0.0.7"
+__version__ = "0.0.8"
 
 from ._reader import get_reader
 from ._writer import multi_layer_writer, single_layer_writer
