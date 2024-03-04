@@ -103,7 +103,7 @@ def reader_function(path):
                                 data0=np.squeeze(data0)
                         else:
                             #Opens as dask
-                            print("Data is >1e bytes. Opening to dask object.")
+                            print("Data is >1Gb. Opening to dask object.")
                             import dask.array as da
                             data0 = da.from_array(i0)
                             if data0.ndim>2:
